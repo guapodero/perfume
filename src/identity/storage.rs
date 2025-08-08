@@ -127,8 +127,6 @@ pub(crate) mod tests {
     cargo test storage -- --nocapture
     */
 
-    include!("/tmp/perfume.rs");
-
     use async_generic::async_generic;
 
     use super::*;

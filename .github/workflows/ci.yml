@@ -33,7 +33,14 @@ jobs:
       - name: Cache Rust dependencies
         uses: Swatinem/rust-cache@v2
 
+      - name: Prepare compiled data
+        env:
+          TMP_DIR: ${{ runner.temp }}
+        run: cargo +nightly run -F codegen
+        
       - name: Run tests
+        env:
+          TMP_DIR: ${{ runner.temp }}
         run: cargo +nightly test --all-features
 
   clippy_check:
@@ -51,7 +58,14 @@ jobs:
       - name: Cache Rust dependencies
         uses: Swatinem/rust-cache@v2
 
+      - name: Prepare compiled data
+        env:
+          TMP_DIR: ${{ runner.temp }}
+        run: cargo +nightly run -F codegen
+
       - name: Run Clippy
+        env:
+          TMP_DIR: ${{ runner.temp }}
         run: cargo +nightly clippy --all-features --all-targets -- --deny warnings
 
   cargo_fmt:
@@ -125,8 +139,15 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@nightly
 
+      - name: Prepare compiled data
+        env:
+          TMP_DIR: ${{ runner.temp }}
+        run: cargo +nightly run -F codegen
+
       - name: Run cargo-udeps
         uses: aig787/cargo-udeps-action@v1
+        env:
+          TMP_DIR: ${{ runner.temp }}
         with:
           version: latest
           args: --all-targets --all-features

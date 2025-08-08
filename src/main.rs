@@ -3,6 +3,9 @@ use perfume::codegen;
 
 #[cfg(feature = "codegen")]
 fn main() {
+    let tmp_dir = std::env::var("TMP_DIR").unwrap_or("/tmp".to_string());
+    let output_path = format!("{tmp_dir}/perfume.rs");
+
     // normally this is in build.rs
     // implemented for the purpose of automated testing
     codegen::ingredients(
@@ -11,7 +14,7 @@ fn main() {
         "data/gerunds.txt",
         "data/colors.txt",
         "data/animals.txt",
-        "/tmp/perfume.rs",
+        output_path,
     )
     .unwrap_or_else(|e| panic!("{e}"));
 }

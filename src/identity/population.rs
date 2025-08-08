@@ -35,7 +35,7 @@ impl<'dom> Population<'dom> {
         &self,
         identifier: &str,
         state: &mut impl StorageState,
-    ) -> Result<Identity, Error> {
+    ) -> Result<Identity<'_>, Error> {
         let storage = self.storage_object(identifier);
 
         let mut offset = 0usize;
@@ -143,8 +143,6 @@ mod tests {
     cargo run -F codegen
     cargo test population -- --nocapture
     */
-
-    include!("/tmp/perfume.rs");
 
     use std::time::Instant;
 

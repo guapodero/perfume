@@ -8,8 +8,8 @@ use perfume::identity::{ConnectionBridge, Population, RemoteStore};
 mod common;
 use common::test_server;
 
-// generated for this example with `cargo run -F codegen`
-include!("/tmp/perfume.rs");
+// generated for this example with `TMP_DIR=/tmp cargo run -F codegen`
+include!(concat!(env!("TMP_DIR"), "/perfume.rs"));
 
 const BHUTANESE: Population = Population {
     domain: "bt",

@@ -58,8 +58,10 @@ pub trait ConnectionBridge {
 }
 
 /// Implements [`StorageState`] using binary search to find digests within storage blobs.
-/// Retrieved storage blobs are assumed to contain lines of *sorted* digests postfixed with offsets.
-/// example: "a5f177766f596d03009d63aba1935b3373d6c125fe0f1a7f22f92a7ba4edc 42"
+/// Retrieved storage blobs are assumed to contain lines of *sorted* digests.
+/// Each digest is postfixed with a space-padded offset followed by '\n'.
+/// Each line is 68 bytes.
+/// example: "9e3b2749dcca704cad379adf3c6894a59c3363f2d78a4a5155555781e69cc     9\n"
 #[derive(Debug)]
 pub struct RemoteStore<B: ConnectionBridge> {
     #[allow(missing_docs)]
@@ -99,19 +101,23 @@ where
             // return <offset>
             Ok(found_at) => {
                 let found_line = &lines[found_at];
-                let found_offset: usize = found_line[(digest.len() + 1)..].parse().unwrap();
+                let found_offset: usize = found_line[(digest.len() + 1)..].trim().parse().unwrap();
                 Ok(found_offset)
             }
             Err(insert_at) => {
                 let next_offset = lines.len();
-                lines.insert(insert_at, format!("{digest} {next_offset}"));
-                let resource_body = Bytes::from(lines.join("\n"));
+
+                // each line is expected to be 68 bytes, to enable HTTP range requests
+                lines.insert(insert_at, format!("{digest} {next_offset:>5}"));
+                let mut resource = lines.join("\n");
+                resource.push_str("\n");
+                let resource_bytes = Bytes::from(resource);
 
                 let mut update_result: Result<(), std::io::Error> = Ok(());
                 if _async {
-                    update_result = self.bridge.put_async(key, resource_body).await;
+                    update_result = self.bridge.put_async(key, resource_bytes).await;
                 } else {
-                    update_result = self.bridge.put(key, resource_body);
+                    update_result = self.bridge.put(key, resource_bytes);
                 }
 
                 update_result.map(|_| next_offset).map_err(|e| e.into())
@@ -188,13 +194,12 @@ pub(crate) mod tests {
             .map(|o| o.map(|b| String::from_utf8_lossy(&b[..]).to_string()))
             .unwrap()
             .unwrap();
-        assert_eq!(
-            storage_object_contents
-                .split('\n')
-                .collect::<Vec<_>>()
-                .len(),
-            10
-        );
+        let storage_objects = storage_object_contents
+            .trim_end()
+            .split('\n')
+            .collect::<Vec<_>>();
+        assert_eq!(storage_objects.len(), 10);
+        assert!(storage_objects.iter().all(|o| o.len() == 67));
         println!("contents of {storage_object_key}:\n{storage_object_contents}");
 
         Ok(())

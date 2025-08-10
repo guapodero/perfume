@@ -15,7 +15,7 @@ use crate::{Error, STORAGE_KEY_LENGTH, read_lines};
 pub enum PopulationSize {
     /// Up to 178 identities per storage blob.
     Bhutan = 727_145,
-    /// Up to 2867 (185KB) per storage blob.
+    /// Up to 2867 (191KB) per storage blob.
     Belgium = 11_742_796,
     /// Up to 49581 (3.2MB) per storage blob.
     Brazil = 203_080_756,

@@ -110,7 +110,7 @@ where
                 // each line is expected to be 68 bytes, to enable HTTP range requests
                 lines.insert(insert_at, format!("{digest} {next_offset:>5}"));
                 let mut resource = lines.join("\n");
-                resource.push_str("\n");
+                resource.push('\n');
                 let resource_bytes = Bytes::from(resource);
 
                 let mut update_result: Result<(), std::io::Error> = Ok(());

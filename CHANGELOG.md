@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2](https://github.com/guapodero/perfume/compare/v0.1.1...v0.1.2)
+_10 August 2025_
+
+### Fixed
+
+* Store blobs using constant-width lines
+
 ## [0.1.1](https://github.com/guapodero/perfume/compare/v0.1.0...v0.1.1)
 _08 August 2025_
 

@@ -25,7 +25,7 @@ bytes = "1"
 async-generic = "1.1"
 phf = "0.12"
 
-phf_codegen = { version = "0.12", optional = true }
+phf_codegen = { version = "0.13", optional = true }
 count-lines = { version = "1.0", optional = true }
 # for downcasting to io::Error from count-lines
 anyhow = { version = "1.0", optional = true } 

@@ -126,7 +126,7 @@ mod tests {
         let cases = [
             (b"0000", u16::MIN),
             (b"ffff", u16::MAX),
-            (b"7fff", (u16::MAX - u16::MIN) / 2),
+            (b"7fff", u16::MAX / 2),
         ];
         for (input, expected) in cases {
             let s = HexString::<4>::from(input.as_slice());

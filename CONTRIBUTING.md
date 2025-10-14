@@ -60,20 +60,11 @@ Some of the tests depend on generated code, which is why there is a `main.rs`.
   cargo clippy --all-targets -F codegen --workspace
   ```
 
-  or
-  ```shell
-  cargo +nightly clippy --all-targets --all-features --workspace
-  ```
-
-- Run all tests: (after running `cargo run -F codegen`)
+- Run all tests:
 
   ```shell
-  cargo test -F codegen --workspace
-  ```
-
-  or
-  ```shell
-  cargo +nightly test --all-features --workspace
+  cargo run -F codegen
+  TMP_DIR=/tmp cargo test -F codegen --workspace
   ```
 
 - Check to see if there are code formatting issues

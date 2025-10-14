@@ -14,6 +14,10 @@
 //! ```no_compile
 //! [build-dependencies]
 //! perfume = { version = "0.1", features = ["codegen"] }
+//!
+//! [dependencies]
+//! perfume = "0.1"
+//! phf = { version = "0.12", default-features = false }
 //! ```
 //!
 //! build.rs

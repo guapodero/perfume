@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.3](https://github.com/guapodero/perfume/compare/v0.1.2...v0.1.3)
+_14 October 2025_
+
+### Fixed
+
+* Cargo config in example documentation
+* CI failures
+
 ## [0.1.2](https://github.com/guapodero/perfume/compare/v0.1.1...v0.1.2)
 _10 August 2025_
 

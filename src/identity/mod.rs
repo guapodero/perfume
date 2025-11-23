@@ -36,7 +36,7 @@ mod tests {
     use crate::hex_string::HexString;
     use crate::identity::storage::BridgeResult;
 
-    include!(concat!(env!("TMP_DIR"), "/perfume.rs"));
+    include!(concat!(env!("TMPDIR"), "/perfume.rs"));
 
     #[derive(Default)]
     pub struct MockBridge {

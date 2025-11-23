@@ -3,7 +3,7 @@ use perfume::codegen;
 
 #[cfg(feature = "codegen")]
 fn main() {
-    let tmp_dir = std::env::var("TMP_DIR").unwrap_or("/tmp".to_string());
+    let tmp_dir = std::env::var("TMPDIR").unwrap_or("/tmp".to_string());
     let output_path = format!("{tmp_dir}/perfume.rs");
 
     // normally this is in build.rs

@@ -2,19 +2,23 @@ use std::io::Error;
 use std::result::Result;
 
 use bytes::Bytes;
+use const_env::env_item;
 
 use perfume::identity::{ConnectionBridge, Population, RemoteStore};
 
 mod common;
 use common::test_server;
 
-// generated for this example with `TMP_DIR=/tmp cargo run -F codegen`
-include!(concat!(env!("TMP_DIR"), "/perfume.rs"));
+// generated for this example with `TMPDIR=/tmp cargo run -F codegen`
+include!(concat!(env!("TMPDIR"), "/perfume.rs"));
+
+#[env_item]
+const PERFUME_SECRET: &'static [u8] = b"3D5aPzC0jwT25eAWlEa4FcW8d9FNz00g";
 
 const BHUTANESE: Population = Population {
     domain: "bt",
-    secret: *b"3D5aPzC0jwT25eAWlEa4FcW8d9FNz00g", // 32 bytes for keyed hasher
-    ingredients: &PERFUME_INGREDIENTS,            // see build.rs example below
+    secret: PERFUME_SECRET,            // 32 bytes for keyed hasher
+    ingredients: &PERFUME_INGREDIENTS, // see build.rs example below
 };
 
 fn main() {
@@ -30,9 +34,10 @@ fn main() {
     let user1 = BHUTANESE.identity("flying@wom.bt", &mut store).unwrap();
     let user2 = BHUTANESE.identity("fast@serpent.bt", &mut store).unwrap();
     let user3 = BHUTANESE.identity("yogi@garbha.bt", &mut store).unwrap();
-    assert_eq!(user1.friendly_name, "unraking-teal-muskrat");
-    assert_eq!(user2.friendly_name, "outpleasing-rose-gelding");
-    assert_eq!(user3.friendly_name, "reifying-navy-lab");
+    println!(
+        "{}\n{}\n{}",
+        user1.friendly_name, user2.friendly_name, user3.friendly_name
+    );
 
     assert_eq!(
         BHUTANESE.identity("flying@wom.bt", &mut store).unwrap(),
@@ -46,10 +51,14 @@ fn main() {
         .unwrap()
         .unwrap();
     assert_eq!(
-        stored_blob.as_ref(),
+        String::from_utf8_lossy(stored_blob.as_ref()),
         // first line of the blob is the last 61 characters of the hash,
         // followed by an offset into a list of random names
-        [user1.storage.digest.as_str().as_bytes(), b" 0"].concat()
+        String::from_utf8_lossy(
+            [user1.storage.digest.as_str().as_bytes(), b"     0"]
+                .concat()
+                .as_ref()
+        )
     );
 }
 

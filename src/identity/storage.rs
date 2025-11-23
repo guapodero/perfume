@@ -156,7 +156,7 @@ pub(crate) mod tests {
     fn impl_test_remote_store() -> Result<(), Error> {
         let brazilian = Population {
             domain: "br",
-            secret: *b"0123456789abcdef0123456789abcdef",
+            secret: b"0123456789abcdef0123456789abcdef",
             ingredients: &PERFUME_INGREDIENTS,
         };
         let mut store = RemoteStore {

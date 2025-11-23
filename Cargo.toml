@@ -34,3 +34,4 @@ anyhow = { version = "1.0", optional = true }
 tokio = { version = "1", features = ["macros", "test-util"] }
 ureq = "3"
 httparse = "1"
+const_env = "0.1"

@@ -19,6 +19,24 @@ See the [documentation](https://docs.rs/perfume) for an example to get started w
 There is also some code generation involved, which relies on the use of a build script: 
 https://doc.rust-lang.org/cargo/reference/build-scripts.html
 
+## Example
+
+```sh
+export TMPDIR=/tmp
+cargo run -F codegen
+
+cargo run --example remote_store_ureq
+# unraking-teal-muskrat
+# outpleasing-rose-gelding
+# reifying-navy-lab
+
+export PERFUME_SECRET=51fX7DcodQ3C0hQQMYSp1W4jU05UEoNi
+cargo run --example remote_store_ureq
+# embruting-aqua-weevil
+# curtsying-lime-cardinal
+# lampblacking-purple-whitefly
+```
+
 ### Word Lists
 
 Although you are encouraged to create your own unique lists of seed words, this can consume a significant amount of time. There are some word lists in this repository to start with. If you choose to open a pull request containing a word list that you found useful, please update the list below with a detailed description.
@@ -43,6 +61,8 @@ The persistence mechanism uses an application secret to generate a seeded hash v
 Only triplet *first-middle-last* names are generated. To ensure that names are not clustered into a small subset of possible *middle* names, the size of each `Population` must be declared. There are comments in the code about this, and you are welcome to open a pull request if you find a simple way to remove this restriction.
 
 The generated names are not guaranteed to be unique, and collisions are possible. There is a unit test to check for collisions, which can probably be improved. After generating 1000 names, `test_distinct_names` reveals several clusters of size 3 which differ by only the *last* name.
+
+This won't work well in distributed environments, as it relies on iteration through a single list of prepared names. This can be fixed in a future release. One option would be to assume that requests are split evenly over all nodes, it which case it becomes practical to shard the list of names.
 
 ## Related Work
 

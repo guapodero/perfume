@@ -22,7 +22,7 @@ pub struct Population<'dom> {
     /// A unique identifier, needed for associating identities with populations.
     pub domain: &'dom str,
     /// Used to generate a keyed hash function, and to randomize word selection.
-    pub secret: [u8; 32],
+    pub secret: &'dom [u8],
     /// Words to use for generating names. Created at compile-time with [`crate::codegen::ingredients`].
     pub ingredients: &'static Ingredients,
 }
@@ -55,7 +55,7 @@ impl<'dom> Population<'dom> {
     }
 
     fn storage_object(&self, identifier: &str) -> Storage {
-        let mut hasher = blake3::Hasher::new_keyed(&self.secret);
+        let mut hasher = blake3::Hasher::new_keyed(self.secret[..32].try_into().unwrap());
         hasher.update(identifier.as_bytes());
         let output = hasher.finalize();
         let mut buf = [0; 64];
@@ -111,7 +111,7 @@ impl<'dom> Population<'dom> {
 
         // randomized between populations
         let mut buf = [0; 64];
-        let pop_seed = base16_encode(self.secret.as_slice(), &mut buf).unwrap();
+        let pop_seed = base16_encode(&self.secret[..32], &mut buf).unwrap();
         let pop_seed: u16 = HexString::<4>::from(&pop_seed[..4]).into();
 
         // randomized between storage blobs
@@ -157,7 +157,7 @@ mod tests {
 
         let brazilian = Population {
             domain: "br",
-            secret: *b"0123456789abcdef0123456789abcdef",
+            secret: b"0123456789abcdef0123456789abcdef",
             ingredients: &PERFUME_INGREDIENTS,
         };
         let mut store = RemoteStore {

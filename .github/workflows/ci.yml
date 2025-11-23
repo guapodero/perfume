@@ -35,12 +35,12 @@ jobs:
 
       - name: Prepare compiled data
         env:
-          TMP_DIR: ${{ runner.temp }}
+          TMPDIR: ${{ runner.temp }}
         run: cargo +nightly run -F codegen
         
       - name: Run tests
         env:
-          TMP_DIR: ${{ runner.temp }}
+          TMPDIR: ${{ runner.temp }}
         run: cargo +nightly test --all-features
 
   clippy_check:
@@ -60,12 +60,12 @@ jobs:
 
       - name: Prepare compiled data
         env:
-          TMP_DIR: ${{ runner.temp }}
+          TMPDIR: ${{ runner.temp }}
         run: cargo +nightly run -F codegen
 
       - name: Run Clippy
         env:
-          TMP_DIR: ${{ runner.temp }}
+          TMPDIR: ${{ runner.temp }}
         run: cargo +nightly clippy --all-features --all-targets -- --deny warnings
 
   cargo_fmt:

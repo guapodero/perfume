@@ -64,7 +64,7 @@ Some of the tests depend on generated code, which is why there is a `main.rs`.
 
   ```shell
   cargo run -F codegen
-  TMP_DIR=/tmp cargo test -F codegen --workspace
+  TMPDIR=/tmp cargo test -F codegen --workspace
   ```
 
 - Check to see if there are code formatting issues

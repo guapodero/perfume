@@ -13,7 +13,7 @@ use common::test_server;
 include!(concat!(env!("TMPDIR"), "/perfume.rs"));
 
 #[env_item]
-const PERFUME_SECRET: &'static [u8] = b"3D5aPzC0jwT25eAWlEa4FcW8d9FNz00g";
+const PERFUME_SECRET: &[u8] = b"3D5aPzC0jwT25eAWlEa4FcW8d9FNz00g";
 
 const BHUTANESE: Population = Population {
     domain: "bt",

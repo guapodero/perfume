@@ -141,13 +141,13 @@ jobs:
 
       - name: Prepare compiled data
         env:
-          TMP_DIR: ${{ runner.temp }}
+          TMPDIR: ${{ runner.temp }}
         run: cargo +nightly run -F codegen
 
       - name: Run cargo-udeps
         uses: aig787/cargo-udeps-action@v1
         env:
-          TMP_DIR: ${{ runner.temp }}
+          TMPDIR: ${{ runner.temp }}
         with:
           version: latest
           args: --all-targets --all-features

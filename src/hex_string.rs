@@ -5,7 +5,7 @@ cfg_if::cfg_if! {
         use std::ascii::Char;
 
         /// `N` hex characters from '[0-9a-f]'.
-        #[derive(Clone)]
+        #[derive(Clone, PartialEq, Eq, Hash)]
         pub struct HexString<const N: usize>([Char; N]);
         impl<const N: usize> HexString<N> {
             /// View as a UTF-8 `str`.
@@ -45,7 +45,7 @@ cfg_if::cfg_if! {
         }
     } else {
         /// `N` hex characters from '[0-9a-f]'.
-        #[derive(Clone)]
+        #[derive(Clone, PartialEq, Eq, Hash)]
         pub struct HexString<const N: usize>(String);
         impl<const N: usize> HexString<N> {
             /// View as a UTF-8 `str`.
@@ -86,16 +86,9 @@ impl From<HexString<4>> for u16 {
     /// Produces an array index in ["0000" .. "ffff"].
     /// u16 indicates the range of possible values: [0 .. 65535]
     fn from(value: HexString<4>) -> Self {
-        let hex_digits = "0123456789abcdef".chars().collect::<Vec<_>>();
-        let mut lo = 0;
-        let mut scale = 4096;
-
-        for ch in value.as_str().chars() {
-            let ch_pos = hex_digits.iter().position(|&d| d == ch).unwrap() as u16;
-            lo += ch_pos * scale;
-            scale /= 16;
-        }
-        lo
+        let mut dst = [0u8; 2];
+        base16ct::lower::decode(value.as_str(), &mut dst).unwrap();
+        u16::from_be_bytes(dst)
     }
 }
 

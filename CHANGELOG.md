@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1](https://github.com/guapodero/perfume/compare/v0.2.0...v0.2.1)
+_20 December 2025_
+
+### Fixed
+
+* Small improvements to HexString type
+
+### Other
+
+* Fix errors
+
 ## [0.2.0](https://github.com/guapodero/perfume/compare/v0.1.3...v0.2.0)
 _23 November 2025_
 

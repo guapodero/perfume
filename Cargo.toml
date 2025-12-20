@@ -1,6 +1,6 @@
 [package]
 name = "perfume"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Daniel James Baumann <dan.james.baumann@gmail.com>"]
 description = "Impromptu conversion of sensitive metadata to persistent random names."
 license = "MIT OR Apache-2.0"

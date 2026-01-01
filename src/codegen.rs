@@ -2,7 +2,7 @@
 
 use std::cmp::max;
 use std::fs::File;
-use std::io::{BufWriter, Write};
+use std::io::{BufRead, BufReader, BufWriter, Write};
 use std::ops::RangeInclusive;
 use std::path::Path;
 
@@ -180,12 +180,13 @@ fn find_combinations(lengths: RangeInclusive<usize>, chars: &[char], results: &m
 }
 
 fn count_lines(file: &Path) -> Result<u32, std::io::Error> {
-    match count_lines::count_lines_exact(file) {
-        Ok(count) => Ok(count as u32),
-        Err(e) => Err(e
-            .downcast::<std::io::Error>()
-            .expect("count_lines_exact should produce io::Error")),
+    let file = File::open(file)?;
+    let read = BufReader::new(file);
+    let mut count = 0;
+    for _ in read.lines().map_while(Result::ok) {
+        count += 1;
     }
+    Ok(count)
 }
 
 #[cfg(test)]

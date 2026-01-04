@@ -57,14 +57,13 @@ Some of the tests depend on generated code, which is why there is a `main.rs`.
 - Run Clippy:
 
   ```shell
-  cargo clippy --all-targets -F codegen --workspace
+  ./task.zsh clippy
   ```
 
 - Run all tests:
 
   ```shell
-  cargo run -F codegen
-  TMPDIR=/tmp cargo test -F codegen --workspace
+  ./task.zsh test
   ```
 
 - Check to see if there are code formatting issues

@@ -17,15 +17,15 @@ nightly = []
 rand = "0.9"
 rand_chacha = "0.9"
 cfg-if = "1"
-blake3 = "1.8"
-base16ct = "0.2"
-thiserror = "2.0"
-http = "1.4"
+blake3 = "1"
+base16ct = "1"
+thiserror = "2"
+http = "1"
 bytes = "1"
-async-generic = "1.1"
-phf = "0.12"
+async-generic = "1"
+phf = "0.13"
 
-phf_codegen = { version = "0.12", optional = true }
+phf_codegen = { version = "0.13", optional = true }
 
 [dev-dependencies]
 tokio = { version = "1", features = ["macros", "test-util"] }

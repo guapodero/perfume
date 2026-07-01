@@ -44,7 +44,7 @@ This is no different than other Rust projects.
 ```shell
 git clone https://github.com/guapodero/perfume
 cd perfume
-cargo test
+./task.zsh test
 ```
 
 ### Useful Commands
